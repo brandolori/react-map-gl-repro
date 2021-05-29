@@ -1,24 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useState } from 'react';
+import ReactMapGL, { GeolocateControl } from "react-map-gl";
 import './App.css';
 
 function App() {
+  const [viewport, setViewport] = useState({
+    width: "100%",
+    height: "100%",
+    latitude: 44.162217568752425,
+    longitude: 12.272382205085062,
+    zoom: 14
+  });
+
+  const props = {
+    scrollZoom: false,
+    attributionControl: false,
+    dragRotate: false,
+    mapboxApiAccessToken: "",
+    onViewportChange: (nextViewport: any) => setViewport({ ...nextViewport, width: "100%", height: "100%" }),
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ReactMapGL
+        {...props}
+        {...viewport}
+      >
+        <GeolocateControl />
+      </ReactMapGL>
     </div>
   );
 }
